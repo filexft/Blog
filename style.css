@@ -1,0 +1,201 @@
+*{
+    box-sizing: border-box;
+}
+body{
+  font-family: 'League Spartan',sans-serif;
+}
+.header {
+    display: grid;
+    z-index: 4;
+    grid-template-columns: auto 380px auto 50px;
+    background-color: white;
+  }
+  .r{
+    color: noir;
+    font-size: 50px;
+    /*font-family: 'League Spartan',sans-serif;*/
+  }
+  
+  .connection{
+    margin: auto;
+    border-radius: 5px;
+    width: 90%;
+    padding: 10px;
+    text-align:center;
+    background-color: #CB6CE6;
+  }
+  .connection:hover{
+    background-color: #e9f0e1;
+    border-radius: 5px;
+  }
+  
+  .header2{
+      display: grid;
+    grid-template-columns: auto 450px auto auto auto ;
+    background:  white;
+    padding: 10px;
+  }
+/* Style du conteneur de catégorie */
+.categorie {
+  text-align: center; /* Centre les boutons horizontalement */
+  margin-bottom: 20px; /* Marge inférieure pour l'espacement */
+}
+
+/* Style de base pour les boutons */
+.button1,
+.button2,
+.button3 {
+  display: inline-block; /* Affiche les boutons en ligne */
+  padding: 10px 20px; /* Espacement intérieur */
+  border: none; /* Supprime la bordure par défaut */
+  border-radius: 20px; /* Coins arrondis pour les boutons */
+  font-size: 16px; /* Taille de police */
+  text-decoration: none; /* Supprime la décoration de lien par défaut */
+  margin: 5px; /* Marge entre les boutons */
+  color: #fff; /* Couleur du texte */
+  cursor: pointer; /* Curseur pointeur au survol */
+}
+
+/* Style spécifique pour le bouton "Home" */
+.button1 {
+  background-color: #007bff; /* Couleur de fond bleue */
+}
+
+/* Style spécifique pour le bouton "Article" */
+.button2 {
+  background-color: #28a745; /* Couleur de fond verte */
+}
+
+/* Style spécifique pour le bouton "Découvrir" */
+.button3 {
+  background-color: #ffc107; /* Couleur de fond jaune */
+}
+
+/* Style des boutons au survol */
+.button1:hover,
+.button2:hover,
+.button3:hover {
+  opacity: 0.8; /* Réduit légèrement l'opacité au survol */
+}
+
+
+/* Style du formulaire */
+.chercher {
+  margin: auto;
+  max-width: 200px;
+  text-align: center; /* Centre le contenu horizontalement */
+}
+
+/* Style du champ de recherche */
+.recherche {
+  padding: 10px; /* Espacement intérieur */
+  border: 2px solid #ccc; /* Bordure grise */
+  border-radius: 20px; /* Coins arrondis */
+  font-size: 16px; /* Taille de police */
+  width: 100%; /* Largeur du champ de recherche */
+  box-sizing: border-box; /* Inclure la bordure dans la largeur */
+}
+
+.recherche::placeholder {
+  color: #999; /* Couleur du texte de l'indice */
+}
+
+/* Style du bouton "Chercher" */
+.valrecherche {
+  background-color: #CB6CE6; /* Couleur de fond bleue */
+  color: #fff; /* Couleur du texte blanc */
+  padding: 10px 20px; /* Espacement intérieur du bouton */
+  border: none; /* Supprime la bordure par défaut */
+  border-radius: 20px; /* Coins arrondis pour le bouton */
+  font-size: 16px; /* Taille de police */
+  cursor: pointer; /* Curseur pointeur au survol */
+  margin-top: 10px; /* Marge supérieure pour l'espacement */
+  width: 100%; /* Largeur du bouton */
+}
+
+/* Style du bouton "Chercher" au survol */
+.valrecherche:hover {
+  background-color: #873b9d; /* Couleur de fond bleue plus foncée au survol */
+}
+
+
+
+.filtre {
+    border: 2px solid #000; 
+    padding: 20px; 
+    width: 300px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  }
+
+.valboutton{
+  background-color: #CB6CE6; /* Couleur de fond bleue */
+  color: #fff; /* Couleur du texte blanc */
+  padding: 10px 20px; /* Espacement intérieur du bouton */
+  border: none; /* Supprime la bordure par défaut */
+  border-radius: 20px; /* Coins arrondis pour le bouton */
+  font-size: 16px; /* Taille de police */
+  cursor: pointer; /* Curseur pointeur au survol */
+  margin-top: 10px; /* Marge supérieure pour l'espacement */
+  width: 50%; /* Largeur du bouton */
+}
+.valboutton:hover {
+  background-color: #873b9d; /* Couleur de fond bleue plus foncée au survol */
+}
+
+/* Style de base pour le footer */
+.footer {
+  background-color: #333; /* Couleur de fond du footer */
+  color: #fff; /* Couleur du texte */
+  padding: 30px 0; /* Espacement interne */
+}
+
+/* Style pour le contenu du footer */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Style pour chaque section du footer */
+.footer-section {
+  flex: 1;
+  padding: 0 20px;
+}
+
+/* Style pour les liens du footer */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #007bff; /* Couleur au survol des liens */
+}
+
+/* Style pour le footer inférieur */
+.footer-bottom {
+  background-color: #222; /* Couleur de fond du footer inférieur */
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+
