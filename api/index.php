@@ -1,6 +1,11 @@
 <?php
 
 
+require_once 'model/db.php';
+require_once 'Controls/article.php';
+require_once 'Controls/user.php';
+
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
@@ -13,6 +18,10 @@ $uri = explode('/', $uri);
 // Extract the endpoint from the URI
 $endpoint = $uri[5];
 
+//Controls
+$db = new dataBase();
+$article = new Article($db->getDB());
+$user = new User($db->getDB()); 
 
 // Handle different endpoints
 if ($endpoint === 'admin') {
@@ -43,13 +52,23 @@ if ($endpoint === 'admin') {
         echo json_encode(['error' => 'Method not allowed']);
     }
 } elseif ($endpoint === 'auth') {
-    // Logic for another endpoint
-    // Implement handling for different HTTP methods as needed
+    
     if($uri[6] == "login" && $_SERVER["REQUEST_METHOD"] == "POST"){
-        //reponse to login 
+         //reponse to login 
         
-        // user->login;
-        echo json_encode(['message' => "welcom to login"]);
+        
+        // echo json_encode(['message' => "Error with the ", 'post array' => $_POST]);
+
+        if(isset($_POST['email']) && isset($_POST['mdp'])){
+            // $user->test();
+
+            $email = $_POST['email'];
+            $mdp =  $_POST['mdp'];
+            $user->login($email, $mdp);
+        }else{
+            echo json_encode(['message' => "Error with the  logging", 'logged' => false]);
+        }
+
     }elseif($uri[6] == "signup" && $_SERVER["REQUEST_METHOD"] == "POST"){
         //reponse to sign up 
 
@@ -60,31 +79,28 @@ if ($endpoint === 'admin') {
         echo json_encode(['error' => 'Endpoint not found']);
     }
 }elseif ($endpoint === 'articles') {
-    // Logic for another endpoint
-    // Implement handling for different HTTP methods as needed
+
+    
+   
     if(!isset($uri[6])){
         //reponse to list of article
         
-        // article->listArticles;
-        echo json_encode(['message' => "list of articles"]);
+        $article->listArticles();
     }elseif(is_numeric($uri[6])){
-        //reponse to category f articles articel
+        //reponse to category of articles 
 
-        // article->listArticlesbyCateg;
-        echo json_encode(['message' => "welcom to category of article"]);
+        $article->listArticlesbyCateg($uri[6]);
     }else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);
     }
 }elseif ($endpoint === 'article') {
     if(is_numeric($uri[6]) && $_SERVER['REQUEST_METHOD'] == "GET"){
-        //reponse to signle articel
+        //reponse to signle articel (viewing an article)
 
-
-        // article->singleArticles;
-        echo json_encode(['message' => "welcom to single article"]);
+        $article->singleArticle($uri[6]);
     }elseif(is_numeric($uri[6]) && $_SERVER['REQUEST_METHOD'] == "DELETE"){
-        //reponse to signle articel
+        //reponse to DEleting a  signle articel
         
         // user->deleteArticle;
         echo json_encode(['message' => "user deleting to single article"]);
@@ -94,10 +110,9 @@ if ($endpoint === 'admin') {
     }
 }elseif ($endpoint === 'user') {
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        //reponse to signle articel
+        //reponse to User Create a  signle articel
 
-        //article-> addArticle;
-        echo json_encode(['message' => "user published article"]);
+        $article->addArticle(10);
     }else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);

@@ -1,10 +1,19 @@
 .
 
-// log in 
-Post /  api/auth/login
 
-// sign up 
-Post /  api/auth/signup
+
+
+
+// User Delete an article
+Post /  api/user/article/
+
+
+
+// Admin category Modification
+Post, Get, Put, Delete  /  api/Admin
+
+
+##Done Routes
 
 
 // get all articles
@@ -20,10 +29,12 @@ Get  /  api/articles/tech
 Get  /  api/article/:id
 
 
-
 // User create an article
 Post /  api/user/article/
 
 
-// Admin category Modification
-Post, Get, Put, Delete  /  api/Admin
+// log in 
+Post /  api/auth/login
+
+// sign up 
+Post /  api/auth/signup
