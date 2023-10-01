@@ -1,0 +1,72 @@
+body {
+    font-family: 'League Spartan',sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 350px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Par défaut, occupe toute la largeur du conteneur */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Si vous voulez des champs de saisie plus étroits */
+input[type="text"],
+input[type="password"] {
+    width: 80%; /* Par exemple, réduire la largeur à 80% */
+}
+
+/* Si vous voulez des champs de saisie avec une largeur fixe en pixels */
+input[type="text"],
+input[type="password"] {
+    width: 200px; /* Par exemple, largeur de 200 pixels */
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #CB6CE6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #DADD15;
+}
+
