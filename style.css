@@ -13,7 +13,6 @@ body{
   .r{
     color: noir;
     font-size: 50px;
-    /*font-family: 'League Spartan',sans-serif;*/
   }
   
   .connection{
@@ -58,17 +57,17 @@ body{
 
 /* Style spécifique pour le bouton "Home" */
 .button1 {
-  background-color: #007bff; /* Couleur de fond bleue */
+  background-color: #DADD15; /* Couleur de fond bleue */
 }
 
 /* Style spécifique pour le bouton "Article" */
 .button2 {
-  background-color: #28a745; /* Couleur de fond verte */
+  background-color: #DADD15; /* Couleur de fond verte */
 }
 
 /* Style spécifique pour le bouton "Découvrir" */
 .button3 {
-  background-color: #ffc107; /* Couleur de fond jaune */
+  background-color: #DADD15; /* Couleur de fond jaune */
 }
 
 /* Style des boutons au survol */
@@ -184,7 +183,7 @@ body{
 }
 
 .footer-section ul li a:hover {
-  color: #007bff; /* Couleur au survol des liens */
+  color: #CB6CE6; /* Couleur au survol des liens */
 }
 
 /* Style pour le footer inférieur */
