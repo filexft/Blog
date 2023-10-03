@@ -7,7 +7,8 @@
 </head>
 <body>
     <?php
-    
+        header("location: login.php");
+            exit();
     ?>
     <h1>Home page</h1>
     <h3>list of users</h3>

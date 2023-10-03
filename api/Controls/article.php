@@ -8,10 +8,11 @@ class  Article{
         $this->db = $db;
     }
 
-    public function addArticle($userid){
-        $querystmt = "INSERT INTO article (titre, description, categories, pseudo, commentaire) values (?,?,?,?,?)";
+    public function addArticle($titre, $description, $category, $pseudo){
+        var_dump($titre, $description, $category, $pseudo);
+        $querystmt = "INSERT INTO article (titre, description, categories, pseudo) values (?,?,?,?)";
         $stmt = $this->db->prepare($querystmt);
-        $stmt->execute(["master js", "description and learning js", "2", $userid, "1"]);
+        $stmt->execute([$titre, $description, $category, $pseudo]);
         $rows = $stmt->fetchAll();
         print_r($rows);
         echo json_encode($rows);
@@ -43,7 +44,6 @@ class  Article{
         // $stmt->bindValue(':categ', $categort, PDO::PARAM_INT);
         
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        print_r($rows);
         echo json_encode($rows);
     }
 

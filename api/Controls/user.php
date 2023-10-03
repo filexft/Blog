@@ -21,10 +21,10 @@ class User{
 
             $rows = $stmt->fetchAll();
                 
-            print_r($rows);
             echo json_encode(['logged' => true , 'data' => $rows, 'new' => true ]);
+        }else{
+            echo json_encode(['logged' => true , 'data' => $rows, 'new' => false ]);
         }
-        echo json_encode(['logged' => true , 'data' => $rows, 'new' => false ]);
 
     }
 

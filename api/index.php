@@ -1,10 +1,11 @@
 <?php
 
+session_start();
 
 require_once 'model/db.php';
 require_once 'Controls/article.php';
 require_once 'Controls/user.php';
-
+require_once 'Controls/admin.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -22,6 +23,7 @@ $endpoint = $uri[5];
 $db = new dataBase();
 $article = new Article($db->getDB());
 $user = new User($db->getDB()); 
+$admin = new Admin($db->getDB());
 
 // Handle different endpoints
 if ($endpoint === 'admin') {
@@ -30,23 +32,38 @@ if ($endpoint === 'admin') {
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
         
         
-        //admin->listCateg
-        echo json_encode(['message' => 'GET request for /person endpoint']);
+        $admin->listCateg();
+        // echo json_encode(['message' => 'GET request for /person endpoint']);
     } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
         
-        
-        //admin->addCateg
-        echo json_encode(['message' => 'POST request for /person endpoint']);
+        if(isset($_POST["category"])){
+            $admin->addCateg($_POST["category"]);
+        }else{
+            echo json_encode(['message' => 'POST request for /person endpoint']);
+        }
+
     } elseif ($_SERVER["REQUEST_METHOD"] == "PUT") {
-        
-        
-        //admin->updateCateg
-        echo json_encode(['message' => 'PUT request for /person endpoint']);
+        if(isset($_GET["newcategory"]) && isset($_GET["oldcategory"])){
+            $oldcategory = $_GET["oldcategory"];
+            $newcategory = $_GET["newcategory"];
+
+            $admin->updateCateg($oldcategory, $newcategory);
+
+            // echo json_encode(['message' => 'Delete request for /person endpoint', 'categ' => $_GET["category"]);
+        }else{
+            echo json_encode(['message' => 'Delete request for /person endpoint']);
+        }
     } elseif ($_SERVER["REQUEST_METHOD"] == "DELETE") {
         
-        
-        //admin->deleteCateg
-        echo json_encode(['message' => 'DELETE request for /person endpoint']);
+        if(isset($_GET["removeCategory"])){
+            $category = $_GET["removeCategory"];
+            $admin->deleteCateg($category);
+
+            // echo json_encode(['message' => 'Delete request for /person endpoint', 'categ' => $_GET["category"]);
+        }else{
+            echo json_encode(['message' => 'Delete request for /person endpoint']);
+        }
+
     } else {
         http_response_code(405); // Method Not Allowed
         echo json_encode(['error' => 'Method not allowed']);
@@ -111,8 +128,17 @@ if ($endpoint === 'admin') {
 }elseif ($endpoint === 'user') {
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         //reponse to User Create a  signle articel
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])  && isset($_POST['category'])  && isset($_POST['description'])){
+                    $titre = $_POST["titre"];
+                    $category = $_POST["category"];
+                    $description = $_POST["description"];
 
-        $article->addArticle(10);
+                    //TO ASK THE TEACHER
+                    $pseudo = isset($_SESSION['user'])? $_SESSION['user']->id : 'unknown';
+                    
+                    // echo json_encode('message' => $_SESSION);
+                    $article->addArticle($titre, $description, $category, $pseudo);
+        }
     }else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);

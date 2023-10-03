@@ -1,23 +1,24 @@
 <?php
     require_once('header.php');
+    
+    require_once('utile.php');
 ?>
-
-    <h1>
-        <?php
-        if(isset($_SESSION['user'])){
+    <?php
+        if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
             //print user Name in this case email
-            echo $_SESSION['user']->admin;
         }else{
-
             //if user session isn't filled (user not logged in) redirect to login page
             header("location: login.php");
             exit();
         }
         ?>
-    </h1>
-    <div class="articlContainer">
-        <div class="filter">
-            <label for="category">categories </label>
+    
+    <div class="creationContainer">
+        <form Method="POST">
+            <label for="title">Add Article Title</label>
+            <input type="text" name="titre" placeholder="How to Speak predica" required>
+
+            <label for="category">Add Article categories </label>
             <?php
                     $res = file_get_contents("http://localhost/ex/blog/Api/index.php/admin");
                     if($res != false){
@@ -38,30 +39,29 @@
                         echo "error with data fetching!";
                     }
                 ?>
-        </div>
+
+
+            
+            <label for="description">Add Article Description </label>
+            <textarea name="description" rows="20" cols="100" placeholder="How to Speak predica in 10m with ease." required></textarea>
+        
+
+            <button class="btn">Add Article</button> 
+        </form>
+
         <?php
-        $res = file_get_contents('http://localhost/ex/blog/Api/index.php/articles');
-        $res = json_decode($res);
-        if(!empty($res)){
-            foreach ($res as $item){
-                echo'
-                    <a href="article.php?id='.$item->id.'">
-                        <div class="card">
-                            <input type="hidden" id="articel_id" name="id" value="'.$item->id.'" />
-                            <h2>'.$item->titre.'</h2>
-                            <h3 class="categ">'.$category[$item->categories].'</h3>
-                            <h4>'.$item->description.'</h4>
-                            <h5>'.$item->pseudo.'</h5>
-                        </div>
-                    </a>';
+            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])  && isset($_POST['category'])  && isset($_POST['description'])){
+                    echo "method Post";
+                    $payload = ['titre' => $_POST["titre"], 'category' => $_POST["category"], 'description' => $_POST["description"]];
+                    $res = httpPost("http://localhost/ex/blog/Api/index.php/user", $payload);
+                    print_r($res);
             }
-        }else{
-            echo "table is empty ";
-        }
-        
         ?>
-        
+
     </div>
+
+
+    
 
 
 <?php

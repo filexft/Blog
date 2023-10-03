@@ -24,11 +24,34 @@
                 if(!empty($res))
                 {
                     if($res->logged == true){
-                    echo "successful loggged";
-                    header("location: articles.php");
-                    exit();
+                        // var_dump($res);
+                        // var_dump($res->data);
+                        if($res->new == false){
+                            $user = array('id' => $res->data[0]->id ,
+                                    'email' => $res->data[0]->email,
+                                    'mdp' => $res->data[0]->mdp,
+                                    'pseudo' => $res->data[0]->pseudo,
+                                    'admin' => $res->data[0]->admin,
+                                    );
+                            $_SESSION['user'] = (object)$user;
+                            header("location: articles.php");
+                            exit();
+                        }else{
+                            $res = json_decode(httpPost("http://localhost/ex/blog/api/index.php/auth/login", $payload));
+                            $user = array('id' => $res->data[0]->id ,
+                                    'email' => $res->data[0]->email,
+                                    'mdp' => $res->data[0]->mdp,
+                                    'pseudo' => $res->data[0]->pseudo,
+                                    'admin' => $res->data[0]->admin,
+                                    );
+                            $_SESSION['user'] = (object)$user;
+                            header("location: articles.php");
+                            exit();
+                        }
                     }else{
                         $_SESSION['error'] = 'please fill the fields!!';
+                        
+                        var_dump($res);
                     }
                 }
             }else{

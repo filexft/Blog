@@ -18,10 +18,13 @@ html {
 
 * {
     border: none;
+    
+    outline: none;
 }
 
 body{
     font-family: 'Poppins', sans-serif;
+    margin: 0;
 }
 
 img {
@@ -46,6 +49,7 @@ article ul {
     list-style-position: inside;
 }
 
+
 a {
     /* Places underlines below the descenders */
     text-underline-position: under;
@@ -62,20 +66,44 @@ a {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html {
+html {
         scroll-behavior: smooth;
-  }
+}
 }
 
 
 /* ---Start OF the CSS ---*/
 
 
+/* ---Start Navbar  CSS ---*/
+
+nav{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 2rem;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.2),0px 7px 12px -3px rgba(0,0,0,0.1);
+    z-index: 8;
+}
+
+nav ul{
+    width: 50%;
+    display: flex;
+    gap: .5rem;
+    justify-content: space-around;
+    padding: .5rem 1rem;
+}
+
+nav ul li a, nav .user{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
 
 /* ---Login Page CSS ---*/
 
 .loginContainer{
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -105,11 +133,39 @@ a {
 
 
 
+/* ---Start Single Article CSS ---*/
+
+.signleArticleContainer{
+    padding: 1rem;
+}
+
+article{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-shadow: 0px 7px 10px -3px rgba(0,0,0,0.2),0px 7px 9px -3px rgba(0,0,0,0.1);
+
+}
+
+article h1{
+    text-align: center;
+    font-size: 3rem;
+}
+
+
+article p{
+    font-size: 1.4rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
 /* ---Start Articles CSS ---*/
 .articlContainer{
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
+    padding: 2rem;
 }
 
 .articlContainer .card{
@@ -119,4 +175,129 @@ a {
     
     border-radius: .7rem;
     box-shadow: 0px 10px 21px -3px rgba(0,0,0,0.2),0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.card h2{
+    font-size: 2rem;
+}
+
+.categ{
+    background-color: #4D60C6;
+    color: #fff;
+    display: inline-block;
+    padding: .4rem .7rem;
+    border-radius: .6rem;
+    width: fit-content;
+    font-size: 1.9rem;
+}
+
+
+
+/* ---Start Admin CSS ---*/
+
+.adminContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 80vh;
+
+}
+
+
+.categoList{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+
+}
+
+.addForm{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 1rem;
+}
+
+.addForm label{
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+
+.addForm input{
+    border: 1px solid #ccc;
+    padding: .5rem 1rem;
+    border-radius: .7rem;
+}
+
+
+.addForm button{
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: .7rem;
+    color: #fff;
+    background-color: #4D60C6;
+}
+
+
+/* ----Article Creation Css */
+
+.creationContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-height: 80vh;
+    margin-bottom: 3rem;
+}
+
+.creationContainer form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.creationContainer form label:nth-child(odd){
+    margin-top: 3rem;
+}
+
+.creationContainer form label{
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.creationContainer form input, .creationContainer form select, .creationContainer form textarea{
+    width: fit-content;
+    padding: .5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: .7rem;
+    font-size: 2rem;
+}
+
+.creationContainer form textarea{
+    font-size: 1.7rem;
+}
+.creationContainer form select{
+    cursor: pointer;
+}
+
+
+/* ---Utile Css */
+.btn{
+    align-self: center;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: .7rem;
+    color: #fff;
+    background-color: #4D60C6;
 }
