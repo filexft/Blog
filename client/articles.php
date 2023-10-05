@@ -6,7 +6,7 @@
         <?php
         if(isset($_SESSION['user'])){
             //print user Name in this case email
-            echo $_SESSION['user']->admin;
+            echo $_SESSION['user']->pseudo;
         }else{
 
             //if user session isn't filled (user not logged in) redirect to login page
@@ -16,51 +16,63 @@
         ?>
     </h1>
     <div class="articlContainer">
-        <div class="filter">
-            <label for="category">categories </label>
-            <?php
-                    // $res = file_get_contents("http://localhost/blog/Api/index.php/admin");
-                    // if($res != false){
-                    //     $data = json_decode($res);
-                    //     if(!empty($data)){
-                    //         $data = $data;
-                        
-                            
-                    //         echo ' <select id="category" name="category" required>';
-                    //         foreach ($data as $categ) {
-                    //             echo '<option value="'.$categ->id.'">'. $categ->nom . '</option>';
-                    //         }
-                    //         echo ' </select>';
-                    //     }else{
-                    //         echo "there is not category!";
-                    //     }
-                    // }else{  
-                    //     echo "error with data fetching!";
-                    // }
-                ?>
-        </div>
+        <form class="filter" method="GET">
+            <label for="searchAuthor">Pseudo </label>
+            <input type="text" name="pseudo_category" id="searchAuthor" placeholder="author or Category">
+            
+            <!-- <input type="checkbox" name="categorySearch" id="categorySearch">
+            <label for="categorySearch">Search by category </label> -->
+        </form>
+
         <?php
-        $res = file_get_contents('http://localhost/blog/Api/index.php/articles');
-        $res = json_decode($res);
-        if(!empty($res)){
-            foreach ($res as $item){
-                echo'
-                    <a href="article.php?id='.$item->id.'">
-                        <div class="card">
-                            <input type="hidden" id="articel_id" name="id" value="'.$item->id.'" />
-                            <h2>'.$item->titre.'</h2>
-                            <h3 class="categ">'.$item->categories.'</h3>
-                            <h4>'.$item->description.'</h4>
-                            <h5>'.$item->pseudo.'</h5>
-                        </div>
-                    </a>';
+            if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['pseudo_category'])){
+
             }
-        }else{
-            echo "table is empty ";
-        }
-        
         ?>
-        
+
+
+
+
+        <div class="cardContainer">
+            <?php
+            if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['pseudo_category'])){
+                $res = file_get_contents('http://localhost/blog/Api/index.php/articles/'.$_GET['pseudo_category']);
+            }else {
+                $res = file_get_contents('http://localhost/blog/Api/index.php/articles');
+            }
+            $res = json_decode($res);
+            
+            // var_dump($res);
+
+            if(!empty($res)){
+                // var_dump($res);
+                foreach ($res as $item){
+                    $categoriesArray = explode(',', $item->article_categories);
+                    // echo $item->article_categories;
+                    $categories = '';
+                    foreach($categoriesArray as $categ){
+                        $categories .= '<span class="categ">'.$categ.'</span>';
+                    }
+
+                    $author = $item->article_author == null? 'Unknown' :$item->article_author; 
+
+                    echo'
+                        <a href="article.php?id='.$item->article_id.'">
+                            <div class="card">
+                                <input type="hidden" id="articel_id" name="id" value="'.$item->article_id.'" />
+                                <h2>'.$item->article_title.'</h2>
+                                <div class="categList">'.$categories.'</div>
+                                <h4>'.$item->article_description.'</h4>
+                                <h5>'.$author.'</h5>
+                            </div>
+                        </a>';
+                }
+            }else{
+                echo "table is empty ";
+            }
+            
+            ?>
+        </div>
     </div>
 
 

@@ -70,23 +70,23 @@ if ($endpoint === 'admin') {
     }
 } elseif ($endpoint === 'auth') {
     
-    if($uri[6] == "login" && $_SERVER["REQUEST_METHOD"] == "POST"){
+    if($uri[5] == "login" && $_SERVER["REQUEST_METHOD"] == "POST"){
          //reponse to login 
         
-        
-        // echo json_encode(['message' => "Error with the ", 'post array' => $_POST]);
 
         if(isset($_POST['email']) && isset($_POST['mdp'])){
             // $user->test();
 
+            // echo json_encode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+            $pseudo = $pseudo = isset($_POST['pseudo']) ? $_POST['pseudo']: '';
             $email = $_POST['email'];
             $mdp =  $_POST['mdp'];
-            $user->login($email, $mdp);
+            $user->login($email, $mdp, $pseudo);
         }else{
             echo json_encode(['message' => "Error with the  logging", 'logged' => false]);
         }
 
-    }elseif($uri[6] == "signup" && $_SERVER["REQUEST_METHOD"] == "POST"){
+    }elseif($uri[5] == "signup" && $_SERVER["REQUEST_METHOD"] == "POST"){
         //reponse to sign up 
 
         // user->signup;
@@ -99,24 +99,30 @@ if ($endpoint === 'admin') {
 
     
    
-    if(!isset($uri[6])){
-        //reponse to list of article
-        
-        $article->listArticles();
-    }elseif(is_numeric($uri[6])){
-        //reponse to category of articles 
+    if(!isset($uri[5])){
 
-        $article->listArticlesbyCateg($uri[6]);
+        //reponse to list of article
+        // echo json_encode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+        $article->listArticles();
+    }elseif(is_numeric($uri[5])){
+        //reponse to category of articles 
+        
+        $article->listArticlesbyCateg($uri[5]);
+    }elseif(!is_numeric($uri[5])){
+        //reponse to Pseudo of articles 
+        
+        $article->listArticlesbyPseudo($uri[5]);
     }else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);
     }
 }elseif ($endpoint === 'article') {
-    if(is_numeric($uri[6]) && $_SERVER['REQUEST_METHOD'] == "GET"){
+    if(is_numeric($uri[5]) && $_SERVER['REQUEST_METHOD'] == "GET"){
         //reponse to signle articel (viewing an article)
 
-        $article->singleArticle($uri[6]);
-    }elseif(is_numeric($uri[6]) && $_SERVER['REQUEST_METHOD'] == "DELETE"){
+        $article->singleArticle($uri[5]);
+    }elseif(is_numeric($uri[5]) && $_SERVER['REQUEST_METHOD'] == "DELETE"){
         //reponse to DEleting a  signle articel
         
         // user->deleteArticle;

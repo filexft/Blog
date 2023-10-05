@@ -59,13 +59,12 @@
 
         <?php
             if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])   && isset($_POST['description'])){
-                    echo "method Post";
-                    // $payload = ['test' => $_POST["titre"], 'description' => $_POST["description"], 'post' => $_POST];
                     $payload = ['data' => $_POST, 'user' => $_SESSION['user']];
 
                     
-                    $res = httpPost("http://localhost/blog/Api/index.php/user", $payload);
-                    print_r($res);
+                    $res = json_decode(httpPost("http://localhost/blog/Api/index.php/user", $payload));
+                    echo '<span class="info">'.$res->message.'</span>';
+                    // print_r($res);
             }
         ?>
 

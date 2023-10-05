@@ -8,21 +8,29 @@
 
     <div class="loginContainer">
         <form Method="POST">
-        <input type="email" name="email" placeholder="email .." required>
-        <input type="password" name="mdp" placeholder="password" required>
-        <input type="submit" value="submit">
-        <p><?php echo (!empty($_SESSION['error'])? $_SESSION['error'] : ''); ?></p>
+            <input type="text" name="pseudo" id="name" placeholder="Pseudo">
+            <input type="email" name="email" placeholder="email .." required>
+            <input type="password" name="mdp" placeholder="password" required>
+            <input type="submit" value="submit">
+
+            <p><?php echo (!empty($_SESSION['error'])? $_SESSION['error'] : ''); ?></p>
         </form>
         <?php
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(isset($_POST['email']) && isset($_POST['mdp'])){
-                $payload = [
+                $pseudo = isset($_POST['pseudo']) ? $_POST['pseudo']: '';
+                $payload = array(
                     'email' => $_POST['email'],
-                    'mdp' => $_POST['mdp']
-                ];
-                $res = json_decode(httpPost("http://localhost/blog/api/index.php/auth/login", $payload));
-                if(!empty($res))
+                    'mdp' => $_POST['mdp'],
+                    'pseudo' => $pseudo
+                );
+                $res = httpPost("http://localhost/blog/api/index.php/auth/login", $payload);
+                
+                var_dump($res);
+
+                if(!empty($res)) 
                 {
+                    $res = json_decode($res);
                     if($res->logged == true){
                         // var_dump($res);
                         // var_dump($res->data);

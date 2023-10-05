@@ -32,32 +32,135 @@ class  Article{
     }
 
     public function listArticles(){
-        $stmt = $this->db->query("SELECT * FROM article;");
+        $query = "  SELECT
+                        a.id AS article_id,
+                        a.titre AS article_title,
+                        a.description AS article_description,
+                        a.pseudo AS article_author_pseudo,
+                        u.pseudo AS article_author,
+                        GROUP_CONCAT(c.nom) AS article_categories
+                    FROM
+                        article AS a
+                    LEFT JOIN
+                        articles_category AS ac ON a.id = ac.article_id
+                    LEFT JOIN
+                        user AS u ON a.pseudo = u.id
+                    LEFT JOIN
+                        categorie AS c ON ac.category_id = c.id
+                    GROUP BY
+                        a.id;";
+
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
         $rows = $stmt->fetchAll();
         echo json_encode($rows);
 
     }
 
-    public function listArticlesbyCateg($categort){
-        $querystmt =  "SELECT * FROM article WHERE categories = ?;";
-        $stmt = $this->db->prepare($querystmt);
-        $stmt->execute([$categort]);
-        // $stmt->bindValue(':categ', $categort, PDO::PARAM_INT);
-        
+    public function listArticlesbyCateg($category){
+        $query = "SELECT
+                        a.id AS article_id,
+                        a.titre AS article_title,
+                        a.description AS article_description,
+                        a.pseudo AS article_author_pseudo,
+                        u.pseudo AS article_author,
+                        GROUP_CONCAT(c.nom) AS article_categories
+                    FROM
+                        article AS a
+                    LEFT JOIN
+                        articles_category AS ac ON a.id = ac.article_id
+                    LEFT JOIN
+                        user AS u ON a.pseudo = u.id
+                    LEFT JOIN
+                        categorie AS c ON ac.category_id = c.id
+                    WHERE  c.nom  = ?
+
+                    GROUP BY a.id;
+                        ";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$category]);
+
         $rows = $stmt->fetchAll();
-        print_r($rows);
+
         echo json_encode($rows);
     }
+
+    public function listArticlesbyPseudo($pseudo){
+        $query = "SELECT
+                        a.id AS article_id,
+                        a.titre AS article_title,
+                        a.description AS article_description,
+                        a.pseudo AS article_author_pseudo,
+                        u.pseudo AS article_author,
+                        GROUP_CONCAT(c.nom) AS article_categories
+                    FROM
+                        article AS a
+                    LEFT JOIN
+                        articles_category AS ac ON a.id = ac.article_id
+                    LEFT JOIN
+                        user AS u ON a.pseudo = u.id
+                    LEFT JOIN
+                        categorie AS c ON ac.category_id = c.id
+                    WHERE u.pseudo = ?
+
+                    GROUP BY a.id;
+                        ";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$pseudo]);
+
+        $rows = $stmt->fetchAll();
+
+        if(empty($rows)){
+            $this->listArticlesbyCateg($pseudo);
+        }else{
+            echo json_encode($rows);
+        }
+
+    } 
 
     public function singleArticle($id){
-        $querystmt =  "SELECT * FROM article WHERE id = ?;";
-        $stmt = $this->db->prepare($querystmt);
-        // $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+
+        $query = "SELECT
+                        a.id AS article_id,
+                        a.titre AS article_title,
+                        a.description AS article_description,
+                        a.pseudo AS article_author_pseudo,
+                        u.pseudo AS article_author,
+                        GROUP_CONCAT(c.nom) AS article_categories
+                    FROM
+                        article AS a
+                    LEFT JOIN
+                        articles_category AS ac ON a.id = ac.article_id
+                    LEFT JOIN
+                        user AS u ON a.pseudo = u.id
+                    LEFT JOIN
+                        categorie AS c ON ac.category_id = c.id
+                    WHERE a.id = ?
+
+                    GROUP BY a.id;
+                        ";
+
+        $stmt = $this->db->prepare($query);
         $stmt->execute([$id]);
-        // $stmt->bindValue(':categ', $categort, PDO::PARAM_INT);
+
+        $rows = $stmt->fetchAll();
+
+
         
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($rows);
+
+        // $querystmt =  "SELECT * FROM article WHERE id = ?;";
+        // $stmt = $this->db->prepare($querystmt);
+        // // $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        // $stmt->execute([$id]);
+        // // $stmt->bindValue(':categ', $categort, PDO::PARAM_INT);
+        
+        // $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // echo json_encode($rows);
     }
 
 

@@ -148,6 +148,17 @@ article{
 
 }
 
+.categAuther{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categAuther h3{
+    font-size: 1.7rem;
+    margin-right: 2rem;
+}
+
 article h1{
     text-align: center;
     font-size: 3rem;
@@ -155,19 +166,27 @@ article h1{
 
 
 article p{
-    font-size: 1.4rem;
-    font-weight: bold;
-    display: inline-block;
+    font-size: 1.6rem;
 }
 
-/* ---Start Articles CSS ---*/
+
+
+/* ---Start Articles List CSS ---*/
 .articlContainer{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 2rem;
     flex-wrap: wrap;
     padding: 2rem;
 }
 
+.cardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
 .articlContainer .card{
     width: 30rem;
     max-width: 100%;
@@ -181,14 +200,33 @@ article p{
     font-size: 2rem;
 }
 
+.filter{
+    align-self: flex-end;
+    padding-right: 2rem;
+}
+.filter label{
+    font-size: 1.7rem;
+}
+
+#searchAuthor{
+    font-size: 1.8rem;
+    border: 1px solid #ccc;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+}
+
+.categList{
+    display: flex;
+    gap: 1rem;
+}
 .categ{
     background-color: #4D60C6;
     color: #fff;
     display: inline-block;
-    padding: .4rem .7rem;
+    padding: .3rem .5rem;
     border-radius: .6rem;
     width: fit-content;
-    font-size: 1.9rem;
+    font-size: 1.3rem;
 }
 
 
