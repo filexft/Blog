@@ -19,7 +19,7 @@
             $uri = parse_url($_SERVER['REQUEST_URI']);
             $id  = explode('=',$uri['query'])[1];
             print_r($id);
-            $url = "http://localhost/ex/blog/Api/index.php/article/$id";
+            $url = "http://localhost/blog/Api/index.php/article/$id";
             $res = file_get_contents($url);
             
             if ($res !== false) {

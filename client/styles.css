@@ -258,23 +258,25 @@ article p{
 }
 
 .creationContainer form{
+    max-width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
     padding: 1rem;
 }
-
+/* 
 .creationContainer form label:nth-child(odd){
     margin-top: 3rem;
-}
+} */
 
 .creationContainer form label{
     font-size: 1.6rem;
     font-weight: 400;
 }
 
-.creationContainer form input, .creationContainer form select, .creationContainer form textarea{
+.creationContainer form input, .creationContainer form textarea{
     width: fit-content;
     padding: .5rem 1rem;
     border: 1px solid #ccc;
@@ -285,9 +287,31 @@ article p{
 .creationContainer form textarea{
     font-size: 1.7rem;
 }
-.creationContainer form select{
-    cursor: pointer;
+
+
+.creationContainer form .catgory{
+    display: flex;
+    flex-direction: column;
 }
+.creationContainer form .catgory h3{
+    font-size: 1.7rem;
+}
+
+.creationContainer form .filtercateg{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.creationContainer form  .filteritem{
+    display: flex;
+    gap: 1rem;
+}
+
+.creationContainer form  .filteritem input, .creationContainer form  .filteritem label{
+    cursor: pointer;
+}   
+
 
 
 /* ---Utile Css */

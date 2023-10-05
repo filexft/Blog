@@ -9,13 +9,26 @@ class  Article{
     }
 
     public function addArticle($titre, $description, $category, $pseudo){
-        var_dump($titre, $description, $category, $pseudo);
-        $querystmt = "INSERT INTO article (titre, description, categories, pseudo) values (?,?,?,?)";
-        $stmt = $this->db->prepare($querystmt);
-        $stmt->execute([$titre, $description, $category, $pseudo]);
-        $rows = $stmt->fetchAll();
-        print_r($rows);
-        echo json_encode($rows);
+        try{
+            // var_dump($titre, $description, $category, $pseudo);
+            $querystmt = "INSERT INTO article (titre, description, pseudo) values (?,?,?)";
+            $stmt = $this->db->prepare($querystmt);
+            $stmt->execute([$titre, $description, $pseudo]);
+            // $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $articleID = $this->db->lastInsertId();
+
+        
+            foreach($category as $categ){
+                $querystmt = "INSERT INTO articles_category (article_id, category_id) values (?,?)";
+                $stmt = $this->db->prepare($querystmt);
+                $stmt->execute([$articleID, $categ]);
+            }
+            echo json_encode(['message' => "article successfully Add!"]);
+        }
+        catch(PDOException $e){
+            echo json_encode(['message' => "article successfully Add!", 'error' => $e->getMessage()]);
+        }
     }
 
     public function listArticles(){

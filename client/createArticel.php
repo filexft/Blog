@@ -18,28 +18,36 @@
             <label for="title">Add Article Title</label>
             <input type="text" name="titre" placeholder="How to Speak predica" required>
 
-            <label for="category">Add Article categories </label>
+            <div class="catgory">
+                
+            <h3>Add Article categories </h3>
             <?php
-                    $res = file_get_contents("http://localhost/ex/blog/Api/index.php/admin");
+                    
+                    echo ' <div class="filtercateg" >';
+                    $res = file_get_contents("http://localhost/blog/Api/index.php/admin");
                     if($res != false){
                         $data = json_decode($res);
+                        
                         if(!empty($data)){
                             $data = $data;
                         
                             
-                            echo ' <select id="category" name="category" required>';
                             foreach ($data as $categ) {
-                                echo '<option value="'.$categ->id.'">'. $categ->nom . '</option>';
+                                echo ' <div class="filteritem" >';
+                                echo '<input type="checkbox" name="c-'.$categ->id.'" id="'.$categ->id.'" value="'. $categ->id .'">';
+                                echo '<label for="'.$categ->id.'">'. $categ->nom .'</label>';
+                                echo ' </div>';
                             }
-                            echo ' </select>';
                         }else{
                             echo "there is not category!";
                         }
                     }else{  
                         echo "error with data fetching!";
                     }
+                    
+                    echo ' </div>';
                 ?>
-
+            </div>
 
             
             <label for="description">Add Article Description </label>
@@ -50,10 +58,13 @@
         </form>
 
         <?php
-            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])  && isset($_POST['category'])  && isset($_POST['description'])){
+            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])   && isset($_POST['description'])){
                     echo "method Post";
-                    $payload = ['titre' => $_POST["titre"], 'category' => $_POST["category"], 'description' => $_POST["description"]];
-                    $res = httpPost("http://localhost/ex/blog/Api/index.php/user", $payload);
+                    // $payload = ['test' => $_POST["titre"], 'description' => $_POST["description"], 'post' => $_POST];
+                    $payload = ['data' => $_POST, 'user' => $_SESSION['user']];
+
+                    
+                    $res = httpPost("http://localhost/blog/Api/index.php/user", $payload);
                     print_r($res);
             }
         ?>

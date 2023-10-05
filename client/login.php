@@ -20,7 +20,7 @@
                     'email' => $_POST['email'],
                     'mdp' => $_POST['mdp']
                 ];
-                $res = json_decode(httpPost("http://localhost/ex/blog/api/index.php/auth/login", $payload));
+                $res = json_decode(httpPost("http://localhost/blog/api/index.php/auth/login", $payload));
                 if(!empty($res))
                 {
                     if($res->logged == true){
@@ -37,7 +37,7 @@
                             header("location: articles.php");
                             exit();
                         }else{
-                            $res = json_decode(httpPost("http://localhost/ex/blog/api/index.php/auth/login", $payload));
+                            $res = json_decode(httpPost("http://localhost/blog/api/index.php/auth/login", $payload));
                             $user = array('id' => $res->data[0]->id ,
                                     'email' => $res->data[0]->email,
                                     'mdp' => $res->data[0]->mdp,

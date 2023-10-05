@@ -24,7 +24,7 @@
                 <td>TITLE </td>
             </tr>
     <?php
-        $res = file_get_contents('http://localhost/ex/blog/Api/index.php/articles');
+        $res = file_get_contents('http://localhost/blog/Api/index.php/articles');
         $res = json_decode($res);
         if(!empty($res)){
             foreach ($res as $item){

@@ -19,28 +19,28 @@
         <div class="filter">
             <label for="category">categories </label>
             <?php
-                    $res = file_get_contents("http://localhost/ex/blog/Api/index.php/admin");
-                    if($res != false){
-                        $data = json_decode($res);
-                        if(!empty($data)){
-                            $data = $data;
+                    // $res = file_get_contents("http://localhost/blog/Api/index.php/admin");
+                    // if($res != false){
+                    //     $data = json_decode($res);
+                    //     if(!empty($data)){
+                    //         $data = $data;
                         
                             
-                            echo ' <select id="category" name="category" required>';
-                            foreach ($data as $categ) {
-                                echo '<option value="'.$categ->id.'">'. $categ->nom . '</option>';
-                            }
-                            echo ' </select>';
-                        }else{
-                            echo "there is not category!";
-                        }
-                    }else{  
-                        echo "error with data fetching!";
-                    }
+                    //         echo ' <select id="category" name="category" required>';
+                    //         foreach ($data as $categ) {
+                    //             echo '<option value="'.$categ->id.'">'. $categ->nom . '</option>';
+                    //         }
+                    //         echo ' </select>';
+                    //     }else{
+                    //         echo "there is not category!";
+                    //     }
+                    // }else{  
+                    //     echo "error with data fetching!";
+                    // }
                 ?>
         </div>
         <?php
-        $res = file_get_contents('http://localhost/ex/blog/Api/index.php/articles');
+        $res = file_get_contents('http://localhost/blog/Api/index.php/articles');
         $res = json_decode($res);
         if(!empty($res)){
             foreach ($res as $item){
@@ -49,7 +49,7 @@
                         <div class="card">
                             <input type="hidden" id="articel_id" name="id" value="'.$item->id.'" />
                             <h2>'.$item->titre.'</h2>
-                            <h3 class="categ">'.$category[$item->categories].'</h3>
+                            <h3 class="categ">'.$item->categories.'</h3>
                             <h4>'.$item->description.'</h4>
                             <h5>'.$item->pseudo.'</h5>
                         </div>

@@ -17,7 +17,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
 // Extract the endpoint from the URI
-$endpoint = $uri[5];
+$endpoint = $uri[4];
 
 //Controls
 $db = new dataBase();
@@ -128,16 +128,30 @@ if ($endpoint === 'admin') {
 }elseif ($endpoint === 'user') {
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         //reponse to User Create a  signle articel
-        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])  && isset($_POST['category'])  && isset($_POST['description'])){
-                    $titre = $_POST["titre"];
-                    $category = $_POST["category"];
-                    $description = $_POST["description"];
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['data']) && isset($_POST['user']) ){
+            //&& isset($_POST['category']) && isset($_POST['titre'])    && isset($_POST['description'])
+                    $data = $_POST['data'];
+                    if(!empty($data)){
+                        $titre = $data["titre"];
+                        $description = $data["description"];
+                        $category = array();
+                        foreach($data as $item){
+                            if(is_numeric($item)){
+                                array_push($category, $item);
+                            }
+                        }
 
-                    //TO ASK THE TEACHER
-                    $pseudo = isset($_SESSION['user'])? $_SESSION['user']->id : 'unknown';
-                    
-                    // echo json_encode('message' => $_SESSION);
-                    $article->addArticle($titre, $description, $category, $pseudo);
+                        //TO ASK THE TEACHER
+                        // $pseudo = isset($_SESSION['user'])? $_SESSION['user']->id : '0';
+                        $user = $_POST['user']['id'];
+                        
+                        
+                        // var_dump($titre, $description, $category, $user);
+                        
+                        // ($data, $titre, $description);
+                        // echo json_encode('message' => $_SESSION);
+                        $article->addArticle($titre, $description, $category, $user);
+                    }
         }
     }else {
         http_response_code(404); // Not Found

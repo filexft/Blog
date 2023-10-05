@@ -19,7 +19,7 @@
         <div>
         <h2>Categoy List</h2>
         <?php
-            $res = file_get_contents("http://localhost/ex/blog/Api/index.php/admin");
+            $res = file_get_contents("http://localhost/blog/Api/index.php/admin");
             if($res != false){
                 $data = json_decode($res);
                 if(!empty($data)){
@@ -70,17 +70,17 @@
         if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['category'])){
                     echo "method Post";
                     $payload = ['category' => $_POST["category"]];
-                    $res = httpPost("http://localhost/ex/blog/Api/index.php/admin", $payload);
+                    $res = httpPost("http://localhost/blog/Api/index.php/admin", $payload);
                     print_r($res);
         }elseif($_SERVER["REQUEST_METHOD"] == "DELETE" && isset($_GET['removeCategory'])){
                     print_r("Method DELETE!");
                     $payload = ['removeCategory' => $_GET["removeCategory"]];
-                    $res = httpDELETE("http://localhost/ex/blog/Api/index.php/admin", $payload);
+                    $res = httpDELETE("http://localhost/blog/Api/index.php/admin", $payload);
                     print_r($res);
         }elseif($_SERVER["REQUEST_METHOD"] == "PUT" && isset($_GET['oldcategory']) && isset($_GET['newcategory'])){
                     print_r("Method PUT!");
                     $payload = ['oldcategory' => $_GEt["oldcategory"], 'newcategory' => $_GEt["newcategory"]];
-                    $res = httpDELPut("http://localhost/ex/blog/Api/index.php/admin", $payload, "PUT");
+                    $res = httpDELPut("http://localhost/blog/Api/index.php/admin", $payload, "PUT");
                     print_r($res);
         }
 
