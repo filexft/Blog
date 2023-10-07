@@ -53,16 +53,6 @@ if ($endpoint === 'admin') {
             echo json_encode(['message' => 'Delete request for /person endpoint']);
         }
 
-        // if(isset($_GET["newcategory"]) && isset($_GET["oldcategory"])){
-        //     $oldcategory = $_GET["oldcategory"];
-        //     $newcategory = $_GET["newcategory"];
-
-        //     $admin->updateCateg($oldcategory, $newcategory);
-
-        //     // echo json_encode(['message' => 'Delete request for /person endpoint', 'categ' => $_GET["category"]);
-        // }else{
-        //     echo json_encode(['message' => 'Update request for /person endpoint']);
-        // }
     } elseif ($_SERVER["REQUEST_METHOD"] == "DELETE") {
         
 
@@ -111,11 +101,9 @@ if ($endpoint === 'admin') {
 }elseif ($endpoint === 'articles') {
 
     
-   
     if(!isset($uri[5])){
 
         //reponse to list of article
-        // echo json_encode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
         $article->listArticles();
     }elseif(is_numeric($uri[5])){
@@ -144,11 +132,14 @@ if ($endpoint === 'admin') {
             echo json_encode(["message" => "enter a value" ]);
         }
 
-    }elseif(is_numeric($uri[5]) && $_SERVER['REQUEST_METHOD'] == "DELETE"){
-        //reponse to DEleting a  signle articel
-        
-        // user->deleteArticle;
-        echo json_encode(['message' => "user deleting to single article"]);
+    }elseif($_SERVER['REQUEST_METHOD'] == "DELETE"){
+        $data = json_decode(file_get_contents("php://input"), true);
+        if(isset($data['article_id'])){
+            $article_id = $data['article_id'];
+            
+            $user->deleteArticle($article_id);
+        }
+
     }else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);
@@ -184,9 +175,8 @@ if ($endpoint === 'admin') {
     }elseif($_SERVER['REQUEST_METHOD'] == "DELETE"){
         $data = json_decode(file_get_contents("php://input"), true);
         $comment_id = $data['comment_id'];
-        // var_dump($data['comment_id']);
-        // echo json_encode($comment_id);
-        $user->deleteArticle($comment_id);
+        
+        $user->deleteComment($comment_id);
 
     }else {
         http_response_code(404); // Not Found

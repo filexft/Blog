@@ -1,19 +1,54 @@
 <?php
-    require_once('../header.php');
+    session_start();
+
+    if(!isset($_SESSION['user'])){
+        //if user session isn't filled (user not logged in) redirect to login page
+        header("location: ../login.php");
+        exit();
+    }
     require_once('../utile.php');
+?>    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" 
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles.css?<?php echo time(); ?>"> 
+</head>
+<body>
 
-    
-?>
-    <?php
-        if(isset($_SESSION['user'])){
-            //print user Name in this case email
-        }else{
+    <nav>
+        <div class="logo">
+            <a href="articles.php">
+                <h1>Golden Blog</h1>
+            </a>
+        </div>
+        <ul class="pages">
+                <li><a href="../articles.php">Home</a></li>
+                
+                <li><a href="../createArticel.php">Create Article</a></li>
 
-            //if user session isn't filled (user not logged in) redirect to login page
-            header("location: login.php");
-            exit();
-        }
-        ?>
+                <li><a href="adminCateg.php">Catgory Edit</a></li>
+        </ul>  
+
+        <div class="user">
+            <?php isset($_SESSION['user'])?$_SESSION['user']->email: ''; ?>
+            <form method="POST">
+                <input type="submit" name="logout" class="btn" value="Log out">
+            </form>
+
+
+            <?php
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout']) && isset($_SESSION['user'])){
+                    unset($_SESSION['user']);
+            }
+            ?>
+        </div>
+    </nav>
     
     <div class="adminContainer">
 
@@ -49,7 +84,6 @@
                     
                     echo '<div class="categoryContainer">';
                     foreach ($data as $categ) {
-                        // var_dump($categ);
                         echo '<div class="singleCategoy">';
                         echo '<li class="categ">'.$categ->nom.'</li>
 
@@ -69,14 +103,6 @@
                         echo '</div>';
                         }
                     echo '</div>';
-                    
-                    // echo '<ul class="categoList">';
-                    // foreach ($data as $categ) {
-                    //     var_dump($categ);
-                    //     echo '<li class="categ">' . $categ->nom . '</li>';
-                    // }
-                    // echo '</ul>';
-
                 }else{
                     echo "there is not category!";
                 }
@@ -92,13 +118,12 @@
             if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['category'])){
                         $payload = ['category' => $_POST["category"]];
                         $res = httpPost("http://localhost/blog/Api/index.php/admin", $payload);
-                        print_r($res);
-                        // header("Refresh:0");
+                        
+                        header("Refresh:0");
             }elseif($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeCategory'])){
                     
                         $payload = ['removeCategory' => $_POST["removeCategory"]];
                         $res = httpDELETE("http://localhost/blog/Api/index.php/admin", $payload);
-                        var_dump($res);
             }elseif($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['UpdateCategory'])){
                         $_SESSION['old_categ'] = $_POST['UpdateCategory'];
                         header("Refresh:0");
@@ -109,11 +134,8 @@
                         $payload = ['oldcategory' => $_POST["oldcategory"], 'newcategory' => $_POST["newcategory"]];
                         $res = httpPUT("http://localhost/blog/Api/index.php/admin", $payload);
                         header("Refresh:0");
-                        print_r($res);
             }
-            
-
-    ?>
+        ?>
 
     </div>
 

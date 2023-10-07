@@ -44,7 +44,7 @@ class User{
                 echo json_encode(['logged' => true , 'data' => $rows, 'new' => false ]);
             }
         }catch(PDOException $e){
-            echo json_encode(['logged' => false , 'error' => $e.getMessage()]);
+            echo json_encode(['logged' => false , 'error' => $e->getMessage()]);
         }
 
     }
@@ -62,31 +62,26 @@ class User{
     }
 
     public function deleteComment($userID, $comment_id){
-        $query = "INSERT INTO commentaire (description, article, pseudo) 
-                Values (?, ?, ?);";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([$comment, $article_ID, $userID]);
-
-        $rows = $stmt->fetchAll();
-
-        echo json_encode($rows);
-    }
-
-    public function deleteArticle($comment_id){
         $query = "DELETE FROM commentaire WHERE id  = ?;";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$comment_id]);
 
         $rows = $stmt->fetchAll();
-        
+
+        echo json_encode($rows);
+    }
+
+    public function deleteArticle($article_id){
+        $query = "DELETE FROM article WHERE id  = ?;";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$article_id]);
+
+        $rows = $stmt->fetchAll();
+
         echo json_encode($rows);
     }
 
     
-    public function test(){
-        
-        echo json_encode(['message' => "welcom to login class"]);
-    }
 }
 
 ?>

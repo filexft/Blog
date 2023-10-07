@@ -12,8 +12,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php
         $uri = parse_url($_SERVER['REQUEST_URI']);
-        $uriArray  = explode('/',$uri['path']);
-        if($uriArray[count($uriArray)-2] == 'admin'){
+        global $adminUriArray;  
+        $adminUriArray = explode('/',$uri['path']);
+        if($adminUriArray[count($adminUriArray)-2] == 'admin'){
             echo '<link rel="stylesheet" href="../styles.css?<?php echo time(); ?>">';
         }else{
             echo '<link rel="stylesheet" href="styles.css?<?php echo time(); ?>">';
@@ -24,14 +25,6 @@
 </head>
 <body>
 
-
-    <?php
-        // if(!empty($_SESSION['user'])){
-            
-        //     $category = ;
-        // }
-        // $category = ['Java', 'JS', 'C'];
-    ?>
     <nav>
         <div class="logo">
             <a href="articles.php">
@@ -42,11 +35,10 @@
                 <li><a href="articles.php">Home</a></li>
                 
                 <li><a href="createArticel.php">Create Article</a></li>
-                
-                <li><a href="#">Discover</a></li>
 
                 <?php   if(isset($_SESSION['user'])){
-                        echo $_SESSION['user']->admin == 1? '<li><a href="admin/adminCateg.php">Catgory Edit</a></li>': '';   
+                        $adminPath = $adminUriArray[count($adminUriArray)-2] == 'admin'? 'adminCateg.php' :'admin/adminCateg.php';
+                        echo $_SESSION['user']->admin == 1? '<li><a href="'.$adminPath.'">Catgory Edit</a></li>': '';   
                     }
                     ?> 
         </ul>  

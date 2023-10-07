@@ -6,7 +6,7 @@ class dataBase{
 
     public function __construct(){
         try{
-          $this->db = new PDO('mysql:host=localhost;dbname=blog;', 'root', '');
+            $this->db = new PDO('mysql:host=localhost;dbname=blog;', 'root', '');
         }catch(PDOException $e){
             exit($e->getMessage());
         }
@@ -15,14 +15,6 @@ class dataBase{
     public function getDB(){
         return $this->db;
     }
-
-    // public function listArticles(){
-    //     $stmt = $this->db->query("SELECT * FROM article;");
-    //     $rows = $stmt->fetchAll();
-    //     // print_r($rows);
-    //     echo json_encode($rows);
-
-    // }
 }
 
 ?>

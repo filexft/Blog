@@ -1,36 +1,14 @@
 <?php
     require_once('header.php');
     require_once('utile.php');
-?>
-
-    <h1>
-        <?php
-        if(isset($_SESSION['user'])){
-            //print user Name in this case email
-        }else{
-
-            //if user session isn't filled (user not logged in) redirect to login page
-            header("location: login.php");
-            exit();
-        }
-        ?>
-    </h1>
-    
+    CheckAuth();
+?>    
     <div class="signleArticleContainer">
         <?php
             $uri = parse_url($_SERVER['REQUEST_URI']);
             $id  = explode('=',$uri['query'])[1];
             
-            // if($id){
-            //     //when user enter first save the id from the url 
-            //     $_SESSION['single_article_id'] = $id ;
-            // }else{
-            //     //when user post a comment or delete a comment the url changeso save from session
-            //     $id = $_SESSION['single_article_id'];
-            // }
-
-            // var_dump($uri);
-
+            
             global $article_id;
             $article_id = $id;
 
@@ -38,7 +16,6 @@
             $url = "http://localhost/blog/Api/index.php/article/$id";
             $res = file_get_contents($url);
 
-            // var_dump($res);
 
 
 
@@ -48,7 +25,6 @@
                 global $Comments;
                 $Comments = json_decode($res)->comments;
                 
-                // var_dump($Comments);
 
                     $categoriesArray = explode(',', $item->article_categories);
                     // echo $item->article_categories;
@@ -96,7 +72,7 @@
 
                     $res = json_decode(httpPost('http://localhost/blog/Api/index.php/article/', $payload));
                     
-                    // var_dump($res);
+                    header("Refresh:0");
                 }
             ?>
 
@@ -110,13 +86,9 @@
 
                             $deleteComment = $_SESSION['user']->id == $comment->user_id? 
                                                 "<form method='POSt'>                                
-                                                    <input type='text' name='delete' readonly value=".$comment->id." >
-                                                    <button class='btn'>Delete</input>
+                                                    <input type='hidden' name='delete' readonly value=".$comment->id." >
+                                                    <button class='btn'><i class='fa-solid fa-trash'></i></input>
                                                 </form>" : '';
-
-                            // $deleteComment = '';
-                            
-                            // var_dump($comment->id);
                             
                             echo '<div class="comment" >
                             <div class="upperComment">
@@ -134,7 +106,7 @@
 
                         $res = httpDELETE('http://localhost/blog/Api/index.php/user/', $payload);
                         
-                        var_dump($res);
+                        header("Refresh:0");
                     }
 
 

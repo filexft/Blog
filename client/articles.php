@@ -1,20 +1,10 @@
 <?php
     require_once('header.php');
+    
+    require_once('utile.php');
+    CheckAuth();
 ?>
 
-    <h1>
-        <?php
-        if(isset($_SESSION['user'])){
-            //print user Name in this case email
-            echo $_SESSION['user']->pseudo;
-        }else{
-
-            //if user session isn't filled (user not logged in) redirect to login page
-            header("location: login.php");
-            exit();
-        }
-        ?>
-    </h1>
     <div class="articlContainer">
         <form class="filter" method="GET">
             <label for="searchAuthor">Pseudo </label>
@@ -42,19 +32,26 @@
             }
             $res = json_decode($res);
             
-            // var_dump($res);
 
             if(!empty($res)){
-                // var_dump($res);
+
                 foreach ($res as $item){
+
+                    // var_dump($res);
+
                     $categoriesArray = explode(',', $item->article_categories);
-                    // echo $item->article_categories;
                     $categories = '';
                     foreach($categoriesArray as $categ){
                         $categories .= '<span class="categ">'.$categ.'</span>';
                     }
 
                     $author = $item->article_author == null? 'Unknown' :$item->article_author; 
+
+                    $deleteArticle = $_SESSION['user']->id == $item->article_author_pseudo? 
+                                                "<form method='POSt'>                                
+                                                    <input type='hidden' name='delete' readonly value=".$item->article_id." >
+                                                    <button class='btn'><i class='fa-solid fa-trash'></i></input>
+                                                </form>" : '';
 
                     echo'
                         <a href="article.php?id='.$item->article_id.'">
@@ -64,11 +61,22 @@
                                 <div class="categList">'.$categories.'</div>
                                 <h4>'.$item->article_description.'</h4>
                                 <h5>'.$author.'</h5>
+                                '.$deleteArticle.'
                             </div>
                         </a>';
                 }
             }else{
                 echo "table is empty ";
+            }
+
+
+            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])){
+                $payload = ['article_id' => $_POST['delete']];
+
+                $res = httpDELETE('http://localhost/blog/Api/index.php/article/', $payload);
+                        
+                //it throws an error if i want to refresh the page
+                // header("Refresh:0");
             }
             
             ?>

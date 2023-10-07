@@ -2,17 +2,9 @@
     require_once('header.php');
     
     require_once('utile.php');
-?>
-    <?php
-        if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-            //print user Name in this case email
-        }else{
-            //if user session isn't filled (user not logged in) redirect to login page
-            header("location: login.php");
-            exit();
-        }
-        ?>
     
+    CheckAuth();
+?>    
     <div class="creationContainer">
         <form Method="POST">
             <label for="title">Add Article Title</label>

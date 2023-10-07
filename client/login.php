@@ -26,11 +26,14 @@
                 );
                 $res = httpPost("http://localhost/blog/api/index.php/auth/login", $payload);
                 
-                var_dump($res);
 
-                if(!empty($res)) 
+                if(!empty($res) && $res != null) 
                 {
                     $res = json_decode($res);
+                    if($res == null){
+                        var_dump('null value');
+                        exit(1);
+                    }
                     if($res->logged == true){
                         // var_dump($res);
                         // var_dump($res->data);
@@ -58,8 +61,6 @@
                         }
                     }else{
                         $_SESSION['error'] = 'please fill the fields!!';
-                        
-                        var_dump($res);
                     }
                 }
             }else{
@@ -73,18 +74,4 @@
 
 <?php
     require_once('footer.php')
-?>
-
-
-
-
-
-<?php
-    // BoilerPlate
-    // require_once('header.php')
-
-
-
-
-    // require_once('footer.php')
 ?>

@@ -1,18 +1,3 @@
-.
-
-
-
-
-
-// User Delete an article
-Post /  api/user/article/
-
-
-
-// Admin category Modification
-Post, Get, Put, Delete  /  api/Admin
-
-
 ##Done Routes
 
 
@@ -38,3 +23,12 @@ Post /  api/auth/login
 
 // sign up 
 Post /  api/auth/signup
+
+
+// User Delete an article
+Post /  api/user/article/
+
+
+
+// Admin category Modification
+Post, Get, Put, Delete  /  api/Admin
