@@ -122,8 +122,8 @@ class  Article{
     } 
 
     public function singleArticle($id){
-
-
+        
+        //get comments
         $query = "SELECT
                         a.id AS article_id,
                         a.titre AS article_title,
@@ -147,21 +147,26 @@ class  Article{
         $stmt = $this->db->prepare($query);
         $stmt->execute([$id]);
 
-        $rows = $stmt->fetchAll();
+        $article = $stmt->fetchAll();
 
+        //get comments 
+        $query =  "SELECT c.id, c.description, u.pseudo , c.article, c.pseudo	as user_id
+                    FROM commentaire c INNER JOIN user u
+                    ON c.pseudo = u.id 
+                    WHERE article = ?;
+                    ";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$id]);
+
+        $comments = $stmt->fetchAll();
 
         
-        echo json_encode($rows);
+        echo json_encode(['article' => $article, 'comments' => $comments]);
 
-        // $querystmt =  "SELECT * FROM article WHERE id = ?;";
-        // $stmt = $this->db->prepare($querystmt);
-        // // $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        // $stmt->execute([$id]);
-        // // $stmt->bindValue(':categ', $categort, PDO::PARAM_INT);
-        
-        // $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // echo json_encode($rows);
     }
+
+    
 
 
     

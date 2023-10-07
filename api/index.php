@@ -43,23 +43,36 @@ if ($endpoint === 'admin') {
         }
 
     } elseif ($_SERVER["REQUEST_METHOD"] == "PUT") {
-        if(isset($_GET["newcategory"]) && isset($_GET["oldcategory"])){
-            $oldcategory = $_GET["oldcategory"];
-            $newcategory = $_GET["newcategory"];
 
-            $admin->updateCateg($oldcategory, $newcategory);
-
-            // echo json_encode(['message' => 'Delete request for /person endpoint', 'categ' => $_GET["category"]);
+        $data = json_decode(file_get_contents("php://input"), true);
+        // $up = $data['removeCategory'];
+        
+        if(isset($data['oldcategory']) && isset($data['newcategory'])){
+                $admin->updateCateg($data['oldcategory'], $data['newcategory']);
         }else{
             echo json_encode(['message' => 'Delete request for /person endpoint']);
         }
+
+        // if(isset($_GET["newcategory"]) && isset($_GET["oldcategory"])){
+        //     $oldcategory = $_GET["oldcategory"];
+        //     $newcategory = $_GET["newcategory"];
+
+        //     $admin->updateCateg($oldcategory, $newcategory);
+
+        //     // echo json_encode(['message' => 'Delete request for /person endpoint', 'categ' => $_GET["category"]);
+        // }else{
+        //     echo json_encode(['message' => 'Update request for /person endpoint']);
+        // }
     } elseif ($_SERVER["REQUEST_METHOD"] == "DELETE") {
         
-        if(isset($_GET["removeCategory"])){
-            $category = $_GET["removeCategory"];
-            $admin->deleteCateg($category);
 
-            // echo json_encode(['message' => 'Delete request for /person endpoint', 'categ' => $_GET["category"]);
+        //brought this from comment delete par tof user
+        $data = json_decode(file_get_contents("php://input"), true);
+        $removeCategory = $data['removeCategory'];
+    
+        if($removeCategory){
+            $admin->deleteCateg($removeCategory);
+
         }else{
             echo json_encode(['message' => 'Delete request for /person endpoint']);
         }
@@ -122,6 +135,15 @@ if ($endpoint === 'admin') {
         //reponse to signle articel (viewing an article)
 
         $article->singleArticle($uri[5]);
+    }elseif($_SERVER['REQUEST_METHOD'] == "POST"){
+        //reponse to Adding a Comment to  a  signle articel
+        if(!empty($_POST['comment']) && $_POST['user_id'] && $_POST['article_id']){
+            $user->AddComment($_POST['user_id'], $_POST['article_id'], $_POST['comment']);
+            
+        }else{
+            echo json_encode(["message" => "enter a value" ]);
+        }
+
     }elseif(is_numeric($uri[5]) && $_SERVER['REQUEST_METHOD'] == "DELETE"){
         //reponse to DEleting a  signle articel
         
@@ -159,6 +181,13 @@ if ($endpoint === 'admin') {
                         $article->addArticle($titre, $description, $category, $user);
                     }
         }
+    }elseif($_SERVER['REQUEST_METHOD'] == "DELETE"){
+        $data = json_decode(file_get_contents("php://input"), true);
+        $comment_id = $data['comment_id'];
+        // var_dump($data['comment_id']);
+        // echo json_encode($comment_id);
+        $user->deleteArticle($comment_id);
+
     }else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);

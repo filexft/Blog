@@ -50,12 +50,36 @@ class User{
     }
 
     
-    public function signup(){
-        
+    public function AddComment($userID, $article_ID, $comment){
+        $query = "INSERT INTO commentaire (description, article, pseudo) 
+                Values (?, ?, ?);";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$comment, $article_ID, $userID]);
+
+        $rows = $stmt->fetchAll();
+
+        echo json_encode($rows);
     }
 
-    public function deleteArticle(){
+    public function deleteComment($userID, $comment_id){
+        $query = "INSERT INTO commentaire (description, article, pseudo) 
+                Values (?, ?, ?);";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$comment, $article_ID, $userID]);
+
+        $rows = $stmt->fetchAll();
+
+        echo json_encode($rows);
+    }
+
+    public function deleteArticle($comment_id){
+        $query = "DELETE FROM commentaire WHERE id  = ?;";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$comment_id]);
+
+        $rows = $stmt->fetchAll();
         
+        echo json_encode($rows);
     }
 
     
