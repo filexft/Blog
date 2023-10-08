@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 08, 2023 at 03:07 PM
+-- Generation Time: Oct 08, 2023 at 03:10 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -32,9 +32,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titre` varchar(200) NOT NULL,
   `description` text NOT NULL,
-  `categories` int NOT NULL,
   `pseudo` int NOT NULL,
-  `commentaire` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user` (`pseudo`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -43,14 +41,14 @@ CREATE TABLE IF NOT EXISTS `article` (
 -- Dumping data for table `article`
 --
 
-INSERT INTO `article` (`id`, `titre`, `description`, `categories`, `pseudo`, `commentaire`) VALUES
-(54, 'alex ', 'how to animate with alex', 0, 25, 0),
-(48, 'Kat', 'kat article', 0, 24, 0),
-(47, 'ft', 'alex and sami', 0, 10, 0),
-(46, 'a', 'a', 0, 10, 0),
-(45, 'a', 'a', 0, 10, 0),
-(44, 't', 't', 0, 10, 0),
-(43, 'first ', 'first article\r\n', 0, 10, 0);
+INSERT INTO `article` (`id`, `titre`, `description`, `pseudo`) VALUES
+(54, 'alex ', 'how to animate with alex', 25),
+(48, 'Kat', 'kat article', 24),
+(47, 'ft', 'alex and sami', 10),
+(46, 'a', 'a', 10),
+(45, 'a', 'a', 10),
+(44, 't', 't', 10),
+(43, 'first ', 'first article\r\n', 10);
 
 -- --------------------------------------------------------
 
@@ -98,7 +96,6 @@ DROP TABLE IF EXISTS `categorie`;
 CREATE TABLE IF NOT EXISTS `categorie` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) NOT NULL,
-  `articles` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom` (`nom`)
 ) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -107,10 +104,10 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 -- Dumping data for table `categorie`
 --
 
-INSERT INTO `categorie` (`id`, `nom`, `articles`) VALUES
-(22, 'test', 0),
-(17, 'java', 0),
-(18, 'C', 0);
+INSERT INTO `categorie` (`id`, `nom`) VALUES
+(22, 'test'),
+(17, 'java'),
+(18, 'C');
 
 -- --------------------------------------------------------
 
