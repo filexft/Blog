@@ -26,6 +26,8 @@
                 );
                 $res = httpPost("http://localhost/blog/api/index.php/auth/login", $payload);
                 
+                // var_dump($res);
+
 
                 if(!empty($res) && $res != null) 
                 {
