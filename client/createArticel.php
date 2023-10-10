@@ -55,8 +55,14 @@
 
                     
                     $res = json_decode(httpPost("http://localhost/blog/Api/index.php/user", $payload));
-                    echo '<span class="info">'.$res->message.'</span>';
-                    // print_r($res);
+                    // echo '<span class="info">'.$res->message.'</span>';
+                    
+                    if($res->success){
+                        header("location: articles.php");
+                        exit();
+                    }
+                    
+                    var_dump($res->success);
             }
         ?>
 

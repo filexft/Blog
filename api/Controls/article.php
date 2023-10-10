@@ -24,10 +24,10 @@ class  Article{
                 $stmt = $this->db->prepare($querystmt);
                 $stmt->execute([$articleID, $categ]);
             }
-            echo json_encode(['message' => "article successfully Add!"]);
+            echo json_encode(['success' => true, 'message' => "article successfully Add!"]);
         }
         catch(PDOException $e){
-            echo json_encode(['message' => "article successfully Add!", 'error' => $e->getMessage()]);
+            echo json_encode(['success' => false,  'message' => "article successfully Add!", 'error' => $e->getMessage()]);
         }
     }
 

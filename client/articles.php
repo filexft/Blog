@@ -3,16 +3,27 @@
     
     require_once('utile.php');
     CheckAuth();
+    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])){
+                $payload = ['article_id' => $_POST['delete']];
+
+                $res = httpDELETE('http://localhost/blog/Api/index.php/article/', $payload);
+                        
+                //it throws an error if i want to refresh the page
+                // header("Refresh:0");
+            }
 ?>
 
     <div class="articlContainer">
-        <form class="filter" method="GET">
-            <label for="searchAuthor">Pseudo </label>
-            <input type="text" name="pseudo_category" id="searchAuthor" placeholder="author or Category">
-            
-            <!-- <input type="checkbox" name="categorySearch" id="categorySearch">
-            <label for="categorySearch">Search by category </label> -->
-        </form>
+        <div class="articleheader">
+            <h2>Category List :</h2>
+            <form class="filter" method="GET">
+                <label for="searchAuthor">Pseudo </label>
+                <input type="text" name="pseudo_category" id="searchAuthor" placeholder="author or Category">
+                
+                <!-- <input type="checkbox" name="categorySearch" id="categorySearch">
+                <label for="categorySearch">Search by category </label> -->
+            </form>
+        </div>
 
         <?php
             if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['pseudo_category'])){
@@ -70,14 +81,7 @@
             }
 
 
-            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])){
-                $payload = ['article_id' => $_POST['delete']];
-
-                $res = httpDELETE('http://localhost/blog/Api/index.php/article/', $payload);
-                        
-                //it throws an error if i want to refresh the page
-                // header("Refresh:0");
-            }
+           
             
             ?>
         </div>
