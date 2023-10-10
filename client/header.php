@@ -10,16 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" 
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <?php
-        $uri = parse_url($_SERVER['REQUEST_URI']);
-        global $adminUriArray;  
-        $adminUriArray = explode('/',$uri['path']);
-        if($adminUriArray[count($adminUriArray)-2] == 'admin'){
-            echo '<link rel="stylesheet" href="../styles.css?<?php echo time(); ?>">';
-        }else{
-            echo '<link rel="stylesheet" href="styles.css?<?php echo time(); ?>">';
-        }
-    ?>
+        
+
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>
     
     
 </head>
